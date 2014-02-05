@@ -12,9 +12,13 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Column="0" Grid.Row="0" >
-            <Border BorderBrush="Black" BorderThickness="2">
-                <Canvas Background="AliceBlue" HorizontalAlignment="Stretch" Height="auto"  Margin="0" VerticalAlignment="Stretch" Width="auto"/>
+            <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <Border VerticalAlignment="Top" HorizontalAlignment="Left" Name="CanvasBorder1" BorderBrush="Black" BorderThickness="2">
+                <Canvas Name="CanvasMainWindow" Background="AliceBlue" HorizontalAlignment="Left" Height="100"  Margin="0" VerticalAlignment="Top" Width="100">
+                    
+                </Canvas>
             </Border>
+            </ScrollViewer>
         </Grid>
         
         <Grid Grid.Column="1" Grid.RowSpan="2">
@@ -25,6 +29,26 @@
                         <ListBoxItem>IR sensor</ListBoxItem>
                     </ListBox>
                 </GroupBox>
+                <GroupBox Header="Map size" Margin="5" VerticalAlignment="Top">
+                    <StackPanel>
+                    <Grid Height="auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0">Height:</Label>
+                        <Label Grid.Row="1" Grid.Column="0">Width:</Label>
+                        <TextBox Grid.Row="0" Grid.Column="1" Margin="2" Name="MapSetHeight">10</TextBox>
+                        <TextBox Grid.Row="1" Grid.Column="1" Margin="2" Name="MapSetWidth">10</TextBox>
+                    </Grid>
+                        <Button Click="Button_Click">Set size</Button>
+                    </StackPanel>
+                </GroupBox>
+                <Button Click="Button_Click_1">Map creator</Button>
             </StackPanel>
         </Grid>
         
