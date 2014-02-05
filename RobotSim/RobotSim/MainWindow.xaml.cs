@@ -46,6 +46,7 @@ namespace RobotSim
                 {
                     Rectangle rec = new Rectangle();
                     rec.Stroke = Brushes.DarkGray;
+                    rec.Fill = Brushes.AliceBlue;
                     rec.StrokeThickness = 1;
                     rec.Width = GridSize;
                     rec.Height = GridSize;

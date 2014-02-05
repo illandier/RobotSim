@@ -37,6 +37,7 @@ namespace RobotSim
                 {
                     Rectangle rec = new Rectangle();
                     rec.Stroke = Brushes.DarkGray;
+                    rec.Fill = Brushes.AliceBlue;
                     rec.StrokeThickness = 1;
                     rec.Width = GridSize;
                     rec.Height = GridSize;
@@ -53,13 +54,82 @@ namespace RobotSim
             InitializeComponent();
             DrawCanvasGrid();
         }
-        public MapCreator(int SetHeight, int SetWidth, int GridSize):this()
+        public MapCreator(int SetHeight, int SetWidth, int GridSize)
+            : this()
         {
             //InitializeComponent();
             this.GridSize = GridSize;
             this.SetWidth = SetWidth;
             this.SetHeight = SetHeight;
             DrawCanvasGrid();
+        }
+
+
+
+        private void CanvasCreatorWindow_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point MousePosition = e.GetPosition(CanvasCreatorWindow);
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+
+                int i = 0;
+                int j = 0;
+                i = (int)(MousePosition.X / GridSize);
+                j = (int)(MousePosition.Y / GridSize);
+                wynikX.Text = i.ToString();
+                wynikY.Text = j.ToString();
+
+                Rectangle rec = new Rectangle();
+                
+                rec.Stroke = Brushes.DarkGray;
+                rec.StrokeThickness = 1;
+                rec.Width = GridSize;
+                rec.Height = GridSize;
+                Canvas.SetTop(rec, (double)(j * GridSize));
+                Canvas.SetLeft(rec, (double)(i * GridSize));
+                
+                if ((string)ModeComboBox.SelectedValue == "1")
+                {
+                    rec.Fill = Brushes.Green;
+                }
+                if ((string)ModeComboBox.SelectedValue == "2")
+                {
+                    rec.Fill = Brushes.Gray;
+                }
+                if ((string)ModeComboBox.SelectedValue == "3")
+                {
+                    rec.Fill = Brushes.Yellow;
+                }
+                CanvasCreatorWindow.Children.Add(rec);
+            }
+
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+
+                int i = 0;
+                int j = 0;
+                i = (int)(MousePosition.X / GridSize);
+                j = (int)(MousePosition.Y / GridSize);
+                wynikX.Text = i.ToString();
+                wynikY.Text = j.ToString();
+
+                Rectangle rec = new Rectangle();
+                rec.Fill = Brushes.AliceBlue;
+                rec.Stroke = Brushes.DarkGray;
+                rec.StrokeThickness = 1;
+                rec.Width = GridSize;
+                rec.Height = GridSize;
+                Canvas.SetTop(rec, (double)(j * GridSize));
+                Canvas.SetLeft(rec, (double)(i * GridSize));
+                CanvasCreatorWindow.Children.Add(rec);
+
+            }
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

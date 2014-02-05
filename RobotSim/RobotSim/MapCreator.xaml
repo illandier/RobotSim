@@ -14,7 +14,7 @@
         <Grid Grid.Column="0" Grid.Row="0" >
             <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
                 <Border VerticalAlignment="Top" HorizontalAlignment="Left" Name="CanvasBorder1" BorderBrush="Black" BorderThickness="2">
-                    <Canvas Name="CanvasCreatorWindow" Background="AliceBlue" HorizontalAlignment="Left" Height="50"  Margin="0" VerticalAlignment="Top" Width="50">
+                    <Canvas MouseMove="CanvasCreatorWindow_MouseMove" Name="CanvasCreatorWindow" Background="AliceBlue" HorizontalAlignment="Left" Height="50"  Margin="0" VerticalAlignment="Top" Width="50">
 
                     </Canvas>
                 </Border>
@@ -23,9 +23,17 @@
 
         <Grid Grid.Column="1" Grid.RowSpan="2">
             <StackPanel>
-                <GroupBox Header="qwerty" Margin="5" Height="250" VerticalAlignment="Top">
+                <GroupBox Header="qwerty" Margin="5" Height="auto" VerticalAlignment="Top">
+                    <ComboBox Name="ModeComboBox" SelectedValuePath="Tag">
+                        <ComboBoxItem IsSelected="True" Tag="1" Content="Start point"></ComboBoxItem>
+                        <ComboBoxItem Tag="2" Content="Wall"></ComboBoxItem>
+                        <ComboBoxItem Tag="3" Content="Checkpoint"></ComboBoxItem>
+                    </ComboBox>
                     
                 </GroupBox>
+                <TextBox Name="wynikX" Width="100" Height="20"></TextBox>
+                <TextBox Name="wynikY" Width="100" Height="20"></TextBox>
+                <Button Click="Button_Click">Close window</Button>
             </StackPanel>
         </Grid>
 
