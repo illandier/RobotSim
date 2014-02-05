@@ -24,10 +24,6 @@ namespace RobotSim
         {
             InitializeComponent();
             GridSize = 50;
-            SetWidth = int.Parse(MapSetWidth.Text);
-            SetHeight = int.Parse(MapSetHeight.Text);
-            CanvasMainWindow.Width = SetWidth * GridSize;
-            CanvasMainWindow.Height = SetHeight * GridSize;
             DrawCanvasGrid();
         }
         public int GridSize { get; set; }
@@ -68,7 +64,7 @@ namespace RobotSim
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            var CreatorWindow = new MapCreator();
+            var CreatorWindow = new MapCreator(SetHeight, SetWidth, GridSize);
             CreatorWindow.Show();
         }
     }

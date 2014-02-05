@@ -14,7 +14,7 @@
         <Grid Grid.Column="0" Grid.Row="0" >
             <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
             <Border VerticalAlignment="Top" HorizontalAlignment="Left" Name="CanvasBorder1" BorderBrush="Black" BorderThickness="2">
-                <Canvas Name="CanvasMainWindow" Background="AliceBlue" HorizontalAlignment="Left" Height="100"  Margin="0" VerticalAlignment="Top" Width="100">
+                <Canvas Name="CanvasMainWindow" Background="AliceBlue" HorizontalAlignment="Left" Height="50"  Margin="0" VerticalAlignment="Top" Width="50">
                     
                 </Canvas>
             </Border>
@@ -49,6 +49,14 @@
                     </StackPanel>
                 </GroupBox>
                 <Button Click="Button_Click_1">Map creator</Button>
+                <StackPanel Margin="5">
+                    <GroupBox Header="Select map to view">
+                        <ListBox>
+                            <ListBoxItem IsSelected="True">First map</ListBoxItem>
+                            <ListBoxItem>Second map</ListBoxItem>
+                        </ListBox>
+                    </GroupBox>
+                </StackPanel>
             </StackPanel>
         </Grid>
         
