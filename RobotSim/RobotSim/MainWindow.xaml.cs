@@ -23,7 +23,7 @@ namespace RobotSim
         public MainWindow()
         {
             InitializeComponent();
-            GridSize = 50;
+            GridSize = 15;
             DrawCanvasGrid();
         }
         public int GridSize { get; set; }
