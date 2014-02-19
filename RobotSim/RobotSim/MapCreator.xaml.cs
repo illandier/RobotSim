@@ -22,6 +22,8 @@ namespace RobotSim
         public int GridSize { get; set; }
         public int SetWidth { get; set; }
         public int SetHeight { get; set; }
+        private Map newMap;
+
         void DrawCanvasGrid()
         {
 
@@ -37,12 +39,30 @@ namespace RobotSim
                 {
                     Rectangle rec = new Rectangle();
                     rec.Stroke = Brushes.DarkGray;
-                    rec.Fill = Brushes.AliceBlue;
+                    
                     rec.StrokeThickness = 1;
                     rec.Width = GridSize;
                     rec.Height = GridSize;
                     Canvas.SetTop(rec, (double)(j * GridSize));
                     Canvas.SetLeft(rec, (double)(i * GridSize));
+                    if (newMap.GetMapField(i, j) == 0)
+                    {
+                        rec.Fill = Brushes.AliceBlue;
+
+                    }
+                    if (newMap.GetMapField(i,j) == 1)
+                    {
+                        rec.Fill = Brushes.Green;
+                        
+                    }
+                    if (newMap.GetMapField(i, j) == 2)
+                    {
+                        rec.Fill = Brushes.Gray;
+                    }
+                    if (newMap.GetMapField(i, j) == 3)
+                    {
+                        rec.Fill = Brushes.Yellow;
+                    }
                     CanvasCreatorWindow.Children.Add(rec);
                 }
             }
@@ -53,6 +73,7 @@ namespace RobotSim
         {
             InitializeComponent();
             DrawCanvasGrid();
+            //newMap = new Map(SetHeight, SetWidth);
         }
         public MapCreator(int SetHeight, int SetWidth, int GridSize)
             : this()
@@ -61,7 +82,9 @@ namespace RobotSim
             this.GridSize = GridSize;
             this.SetWidth = SetWidth;
             this.SetHeight = SetHeight;
+            newMap = new Map(SetHeight, SetWidth);
             DrawCanvasGrid();
+            
         }
 
 
@@ -80,25 +103,28 @@ namespace RobotSim
                 wynikY.Text = j.ToString();
 
                 Rectangle rec = new Rectangle();
-                
+
                 rec.Stroke = Brushes.DarkGray;
                 rec.StrokeThickness = 1;
                 rec.Width = GridSize;
                 rec.Height = GridSize;
                 Canvas.SetTop(rec, (double)(j * GridSize));
                 Canvas.SetLeft(rec, (double)(i * GridSize));
-                
+
                 if ((string)ModeComboBox.SelectedValue == "1")
                 {
                     rec.Fill = Brushes.Green;
+                    newMap.SetMapField(i, j, 1);
                 }
                 if ((string)ModeComboBox.SelectedValue == "2")
                 {
                     rec.Fill = Brushes.Gray;
+                    newMap.SetMapField(i, j, 2);
                 }
                 if ((string)ModeComboBox.SelectedValue == "3")
                 {
                     rec.Fill = Brushes.Yellow;
+                    newMap.SetMapField(i, j, 3);
                 }
                 CanvasCreatorWindow.Children.Add(rec);
             }
@@ -121,15 +147,51 @@ namespace RobotSim
                 rec.Height = GridSize;
                 Canvas.SetTop(rec, (double)(j * GridSize));
                 Canvas.SetLeft(rec, (double)(i * GridSize));
+                newMap.SetMapField(i, j, 0);
                 CanvasCreatorWindow.Children.Add(rec);
 
             }
 
         }
 
+        private void LoadMap()
+        {
+
+
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            newMap.SaveToFile();
             this.Close();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            string fileContent = System.IO.File.ReadAllText("test.csv");
+
+            string[] fileContentSplit = fileContent.Split('\n');
+            string[,] mapTemp;
+
+            int y = 0;
+            foreach (string c in fileContentSplit)
+            {
+                if (c == "") break;
+                string[] temp = c.Split(',');
+                int x = 0;
+                
+                foreach (string d in temp)
+                {
+                    newMap.SetMapField(y, x, int.Parse(temp[x]));
+                    x++;
+                }
+
+                y++;
+
+            }
+            DrawCanvasGrid();
+        }
+
+
     }
 }

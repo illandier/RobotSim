@@ -71,6 +71,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Map.cs" />
     <Compile Include="MapCreator.xaml.cs">
       <DependentUpon>MapCreator.xaml</DependentUpon>
     </Compile>
