@@ -68,5 +68,70 @@ namespace RobotSim
             var CreatorWindow = new MapCreator(SetHeight, SetWidth, GridSize);
             CreatorWindow.Show();
         }
+        private string tmp;
+        private void printMap1(int[,] map)
+        {
+
+            for (int i = 0; i < SetHeight; i++)
+            {
+                for (int j = 0; j < SetWidth; j++)
+                {
+                    tmp += map[i, j] + "\t";
+                }
+                tmp += '\n';
+            }
+            tmp += '\n';
+            testBox.Text = tmp;
+        }
+        private void printMap2(int[,] map)
+        {
+
+            for (int i = 0; i < SetWidth; i++)
+            {
+                for (int j = 0; j < SetHeight; j++)
+                {
+                    tmp += map[i, j] + "\t";
+                }
+                tmp += '\n';
+            }
+            tmp += '\n';
+            
+        }
+
+        private void TestMethod()
+        {
+            int[,] image = new int[SetHeight, SetWidth];
+            Random rnd = new Random();
+            int current = 0;
+            for (int i = 0; i < SetHeight; i++)
+            {
+                for (int j = 0; j < SetWidth; j++)
+                {
+
+                    int x = rnd.Next(5);
+                    image[i, j] = current;
+                    current++;
+                }
+            }
+            printMap1(image);
+            int[,] newImage = new int[SetWidth, SetHeight];
+            for (int i = SetHeight - 1; i >= 0; --i)
+            {
+                for (int j = 0; j < SetWidth; ++j)
+                {
+                    newImage[j, (SetHeight - 1) - i] = image[i, j];
+                }
+            }
+
+            printMap2(newImage);
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+            tmp = "";
+            TestMethod();
+            testBox.Text = tmp;
+        }
     }
 }
