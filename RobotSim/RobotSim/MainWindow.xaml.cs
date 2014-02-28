@@ -24,13 +24,92 @@ namespace RobotSim
         {
             InitializeComponent();
             GridSize = 15;
-            DrawCanvasGrid();
+            SetWidth = int.Parse(MapSetWidth.Text);
+            SetHeight = int.Parse(MapSetHeight.Text);
+            newMap = new Map(SetWidth, SetHeight);
+            ResetPosition();
+            DrawCanvasGrid2();
         }
         public int GridSize { get; set; }
         public int SetWidth { get; set; }
         public int SetHeight { get; set; }
+        private Map newMap;
+        private Point currentPosition;
 
-        void DrawCanvasGrid()
+        private void ResetPosition()
+        {
+            currentPosition.X = 0;
+            currentPosition.Y = 0;
+        }
+
+        void DrawCanvasGrid2()
+        {
+
+            CanvasMainWindow.Width = SetWidth * GridSize;
+            CanvasMainWindow.Height = SetHeight * GridSize;
+            CanvasMainWindow.Children.Clear();
+            double width = CanvasMainWindow.Width;
+            double height = CanvasMainWindow.Height;
+
+            /*for (int i = 0; i < SetHeight; i++)
+            {
+                for (int j = 0; j < SetWidth; j++)
+                {
+                    Rectangle rec = new Rectangle();
+                    rec.Stroke = Brushes.DarkGray;
+                    rec.Fill = Brushes.AliceBlue;
+                    rec.StrokeThickness = 1;
+                    rec.Width = GridSize;
+                    rec.Height = GridSize;
+                    Canvas.SetTop(rec, (double)(j * GridSize));
+                    Canvas.SetLeft(rec, (double)(i * GridSize));
+                    CanvasMainWindow.Children.Add(rec);
+                }
+            }*/
+
+
+            for (int i = 0; i < SetHeight; i++)
+            {
+                for (int j = 0; j < SetWidth; j++)
+                {
+                    Rectangle rec = new Rectangle();
+                    rec.Stroke = Brushes.DarkGray;
+
+                    rec.StrokeThickness = 1;
+                    rec.Width = GridSize;
+                    rec.Height = GridSize;
+                    Canvas.SetTop(rec, (double)(i * GridSize));
+                    Canvas.SetLeft(rec, (double)(j * GridSize));
+                    if (newMap.GetMapField(j, i) == 0)
+                    {
+                        rec.Fill = Brushes.AliceBlue;
+
+                    }
+                    if (newMap.GetMapField(j, i) == 1)
+                    {
+                        rec.Fill = Brushes.Green;
+
+                    }
+                    if (newMap.GetMapField(j, i) == 2)
+                    {
+                        rec.Fill = Brushes.Gray;
+                    }
+                    if (newMap.GetMapField(j, i) == 3)
+                    {
+                        rec.Fill = Brushes.Yellow;
+                    }
+                    if (currentPosition.Y == i && currentPosition.X == j)
+                    {
+                        rec.Fill = Brushes.Red;
+                    }
+                    CanvasMainWindow.Children.Add(rec);
+                }
+            }
+
+        }
+
+
+        /*void DrawCanvasGrid()
         {
             SetWidth = int.Parse(MapSetWidth.Text);
             SetHeight = int.Parse(MapSetHeight.Text);
@@ -40,9 +119,9 @@ namespace RobotSim
             double width = CanvasMainWindow.Width;
             double height = CanvasMainWindow.Height;
 
-            for (int i = 0; i < SetWidth; i++)
+            for (int i = 0; i < SetHeight; i++)
             {
-                for (int j = 0; j < SetHeight; j++)
+                for (int j = 0; j < SetWidth; j++)
                 {
                     Rectangle rec = new Rectangle();
                     rec.Stroke = Brushes.DarkGray;
@@ -56,11 +135,15 @@ namespace RobotSim
                 }
             }
 
-        }
+        }*/
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DrawCanvasGrid();
+            SetWidth = int.Parse(MapSetWidth.Text);
+            SetHeight = int.Parse(MapSetHeight.Text);
+            newMap = new Map(SetWidth, SetHeight);
+            ResetPosition();
+            DrawCanvasGrid2();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -95,7 +178,7 @@ namespace RobotSim
                 tmp += '\n';
             }
             tmp += '\n';
-            
+
         }
 
         private void TestMethod()
@@ -132,6 +215,72 @@ namespace RobotSim
             tmp = "";
             TestMethod();
             testBox.Text = tmp;
+        }
+
+        private void Move_Right()
+        {
+            if (currentPosition.X < (SetWidth - 1) && (newMap.GetMapField((int)(currentPosition.X + 1), (int) currentPosition.Y) != 2))
+            {
+                currentPosition.X++;
+            }
+        }
+
+        private void Move_Left()
+        {
+            if (currentPosition.X > 0 && (newMap.GetMapField((int)(currentPosition.X - 1), (int)currentPosition.Y) != 2))
+            {
+                currentPosition.X--;
+            }
+        }
+
+        private void Move_Down()
+        {
+            if (currentPosition.Y < (SetHeight - 1) && (newMap.GetMapField((int)(currentPosition.X), (int)(currentPosition.Y+1)) != 2))
+            {
+                currentPosition.Y++;
+            }
+        }
+
+        private void Move_Up()
+        {
+            if (currentPosition.Y > 0 && (newMap.GetMapField((int)(currentPosition.X), (int)(currentPosition.Y - 1)) != 2))
+            {
+                currentPosition.Y--;
+            }
+        }
+
+        private int f = 0;
+        private void CanvasMainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            bool keyPressed = false;
+            if (e.Key == Key.D)
+            {
+                Move_Right();
+                keyPressed = true;
+            }
+            if (e.Key == Key.A)
+            {
+                Move_Left();
+                keyPressed = true;
+            }
+            if (e.Key == Key.S)
+            {
+                Move_Down();
+                keyPressed = true;
+            }
+            if (e.Key == Key.W)
+            {
+                Move_Up();
+                keyPressed = true;
+            }
+
+            f++;
+            String abc = "Test: " + f.ToString();
+            testBox.Text = abc;
+            if (keyPressed)
+            {
+                DrawCanvasGrid2();
+            }
         }
     }
 }

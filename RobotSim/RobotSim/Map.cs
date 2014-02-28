@@ -23,7 +23,10 @@ namespace RobotSim
                 for (int j = 0; j < this.mapWidth; j++)
                 {
                     mapFields[i, j] = 0;
-
+                    if (i== 5 && j == 5)
+                    {
+                        mapFields[i, j] = 2;
+                    }
                 }
             }
         }
@@ -40,7 +43,7 @@ namespace RobotSim
 
         public int GetMapField(int x, int y)
         {
-            return this.mapFields[x, y];
+            return this.mapFields[y, x];
         }
         public void SaveToFile()
         {
