@@ -45,21 +45,21 @@ namespace RobotSim
                     rec.Height = GridSize;
                     Canvas.SetTop(rec, (double)(j * GridSize));
                     Canvas.SetLeft(rec, (double)(i * GridSize));
-                    if (newMap.GetMapField(i, j) == 0)
+                    if (newMap.GetMapField(j, i) == 0)
                     {
                         rec.Fill = Brushes.AliceBlue;
 
                     }
-                    if (newMap.GetMapField(i,j) == 1)
+                    if (newMap.GetMapField(j, i) == 1)
                     {
                         rec.Fill = Brushes.Green;
                         
                     }
-                    if (newMap.GetMapField(i, j) == 2)
+                    if (newMap.GetMapField(j, i) == 2)
                     {
                         rec.Fill = Brushes.Gray;
                     }
-                    if (newMap.GetMapField(i, j) == 3)
+                    if (newMap.GetMapField(j, i) == 3)
                     {
                         rec.Fill = Brushes.Yellow;
                     }
@@ -114,17 +114,17 @@ namespace RobotSim
                 if ((string)ModeComboBox.SelectedValue == "1")
                 {
                     rec.Fill = Brushes.Green;
-                    newMap.SetMapField(i, j, 1);
+                    newMap.SetMapField(j, i, 1);
                 }
                 if ((string)ModeComboBox.SelectedValue == "2")
                 {
                     rec.Fill = Brushes.Gray;
-                    newMap.SetMapField(i, j, 2);
+                    newMap.SetMapField(j, i, 2);
                 }
                 if ((string)ModeComboBox.SelectedValue == "3")
                 {
                     rec.Fill = Brushes.Yellow;
-                    newMap.SetMapField(i, j, 3);
+                    newMap.SetMapField(j, i, 3);
                 }
                 CanvasCreatorWindow.Children.Add(rec);
             }
@@ -147,7 +147,7 @@ namespace RobotSim
                 rec.Height = GridSize;
                 Canvas.SetTop(rec, (double)(j * GridSize));
                 Canvas.SetLeft(rec, (double)(i * GridSize));
-                newMap.SetMapField(i, j, 0);
+                newMap.SetMapField(j, i, 0);
                 CanvasCreatorWindow.Children.Add(rec);
 
             }
@@ -162,34 +162,20 @@ namespace RobotSim
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            newMap.SaveToFile();
+            
             this.Close();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            string fileContent = System.IO.File.ReadAllText("test.csv");
-
-            string[] fileContentSplit = fileContent.Split('\n');
-            string[,] mapTemp;
-
-            int y = 0;
-            foreach (string c in fileContentSplit)
-            {
-                if (c == "") break;
-                string[] temp = c.Split(',');
-                int x = 0;
-                
-                foreach (string d in temp)
-                {
-                    newMap.SetMapField(y, x, int.Parse(temp[x]));
-                    x++;
-                }
-
-                y++;
-
-            }
+            newMap.LoadMap();
             DrawCanvasGrid();
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            newMap.SaveToFile();
+            
         }
 
 

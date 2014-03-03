@@ -23,7 +23,7 @@ namespace RobotSim
                 for (int j = 0; j < this.mapWidth; j++)
                 {
                     mapFields[i, j] = 0;
-                    if (i== 5 && j == 5)
+                    if (i == 5 && j == 5)
                     {
                         mapFields[i, j] = 2;
                     }
@@ -58,6 +58,32 @@ namespace RobotSim
                 sw.Write('\n');
             }
             sw.Close();
+        }
+
+        public void LoadMap()
+        {
+            string fileContent = System.IO.File.ReadAllText("test.csv");
+
+            string[] fileContentSplit = fileContent.Split('\n');
+            string[,] mapTemp;
+
+            int y = 0;
+            foreach (string c in fileContentSplit)
+            {
+                if (c == "") break;
+                string[] temp = c.Split(',');
+                int x = 0;
+
+                foreach (string d in temp)
+                {
+                    this.SetMapField(x, y, int.Parse(temp[x]));
+                    x++;
+                }
+
+                y++;
+
+            }
+            
         }
 
 
