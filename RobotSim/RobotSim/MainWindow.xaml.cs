@@ -28,6 +28,7 @@ namespace RobotSim
             SetHeight = int.Parse(MapSetHeight.Text);
             newMap = new Map(SetWidth, SetHeight);
             ResetPosition();
+            s = new Sensor();
             DrawCanvasGrid2();
         }
         public int GridSize { get; set; }
@@ -35,7 +36,7 @@ namespace RobotSim
         public int SetHeight { get; set; }
         private Map newMap;
         private Point currentPosition;
-
+        private Sensor s;
         private void ResetPosition()
         {
             currentPosition.X = 0;
@@ -44,12 +45,11 @@ namespace RobotSim
 
         void DrawCanvasGrid2()
         {
-
             CanvasMainWindow.Width = SetWidth * GridSize;
             CanvasMainWindow.Height = SetHeight * GridSize;
-            CanvasMainWindow.Children.Clear();
             double width = CanvasMainWindow.Width;
             double height = CanvasMainWindow.Height;
+            CanvasMainWindow.Children.Clear();
 
             /*for (int i = 0; i < SetHeight; i++)
             {
@@ -105,7 +105,9 @@ namespace RobotSim
                     CanvasMainWindow.Children.Add(rec);
                 }
             }
-
+            
+            DrawSensorRadius();
+            DrawSensorLines();
         }
 
 
@@ -219,7 +221,7 @@ namespace RobotSim
 
         private void Move_Right()
         {
-            if (currentPosition.X < (SetWidth - 1) && (newMap.GetMapField((int)(currentPosition.X + 1), (int) currentPosition.Y) != 2))
+            if (currentPosition.X < (SetWidth - 1) && (newMap.GetMapField((int)(currentPosition.X + 1), (int)currentPosition.Y) != 2))
             {
                 currentPosition.X++;
             }
@@ -235,7 +237,7 @@ namespace RobotSim
 
         private void Move_Down()
         {
-            if (currentPosition.Y < (SetHeight - 1) && (newMap.GetMapField((int)(currentPosition.X), (int)(currentPosition.Y+1)) != 2))
+            if (currentPosition.Y < (SetHeight - 1) && (newMap.GetMapField((int)(currentPosition.X), (int)(currentPosition.Y + 1)) != 2))
             {
                 currentPosition.Y++;
             }
@@ -280,7 +282,74 @@ namespace RobotSim
             if (keyPressed)
             {
                 DrawCanvasGrid2();
+                //DrawSensorRadius();
             }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            s = new Sensor();
+            DrawCanvasGrid2();
+            //CanvasMainWindow.Children.Clear();
+        }
+
+
+        private void DrawSensorRadius()
+        {
+            s.ClearLineList();
+            string text = "";
+            s.calcPoints(currentPosition, int.Parse(sesnsorRadius.Text));
+            foreach (Point p in s.pointsAroundCenter)
+            {
+                text += p.X + ", " + p.Y + "\n";
+                //newMap.SetMapField((int)p.X, (int)p.Y, 3);
+                if (p.X >= 0 && p.X < SetWidth && p.Y >= 0 && p.Y < SetHeight)
+                {
+                    Rectangle rec = new Rectangle();
+                    //rec.Stroke = Brushes.DarkGray;
+                    s.CalcLine(currentPosition, p);
+                    rec.StrokeThickness = 1;
+                    rec.Width = GridSize;
+                    rec.Height = GridSize;
+                    Canvas.SetTop(rec, (double)(p.Y * GridSize));
+                    Canvas.SetLeft(rec, (double)(p.X * GridSize));
+                    rec.Opacity = 0.2;
+                    rec.Fill = Brushes.Blue;
+                    CanvasMainWindow.Children.Add(rec);
+                }
+            }
+            //testBox.Text = text;
+            //DrawCanvasGrid2();
+        }
+
+
+
+
+        private void DrawSensorLines()
+        {
+            string text = "";
+            
+            foreach (Point p in s.pointsOnLine)
+            {
+                text += p.X + ", " + p.Y + "\n";
+                //newMap.SetMapField((int)p.X, (int)p.Y, 3);
+                if (p.X >= 0 && p.X < SetWidth && p.Y >= 0 && p.Y < SetHeight)
+                {
+                    Rectangle rec = new Rectangle();
+                    //rec.Stroke = Brushes.DarkGray;
+
+                    rec.StrokeThickness = 1;
+                    rec.Width = GridSize;
+                    rec.Height = GridSize;
+                    Canvas.SetTop(rec, (double)(p.Y * GridSize));
+                    Canvas.SetLeft(rec, (double)(p.X * GridSize));
+                    rec.Opacity = 1;
+                    rec.Fill = Brushes.Yellow;
+                    CanvasMainWindow.Children.Add(rec);
+                }
+            }
+            //testBox.Text = text;
+            //DrawCanvasGrid2();
         }
     }
 }

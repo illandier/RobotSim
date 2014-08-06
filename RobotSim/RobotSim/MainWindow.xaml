@@ -59,6 +59,8 @@
                     </GroupBox>
                 </StackPanel>
                 <Button Content="Button" Click="Button_Click_2"/>
+                <Button Content="pointRange" Click="Button_Click_3"></Button>
+                <TextBox Tag="sensor radius" Name="sesnsorRadius" Height="20" Width="30">3</TextBox>
             </StackPanel>
         </Grid>
 
